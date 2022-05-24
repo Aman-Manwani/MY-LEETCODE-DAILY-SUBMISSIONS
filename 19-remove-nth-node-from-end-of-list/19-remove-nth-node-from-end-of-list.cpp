@@ -10,12 +10,6 @@
  */
 class Solution {
 public:
-    void deletion_at_head(ListNode*&head)
-    {   
-        ListNode*temp=head->next;
-        delete head;
-        head=temp;
-    }
     void deletion_at_tail(ListNode*&head)
     {
         ListNode*tail=head;
@@ -33,25 +27,6 @@ public:
         delete tail;
         prev->next=NULL;
     }
-    void deletion_at_middle(ListNode*&head,int p)
-    {   
-        int jump=1;
-        ListNode*temp=head;
-        while(jump<p)
-        {
-            temp=temp->next;
-            jump++;
-        }
-        ListNode*prev=head;
-        int jumps=1;
-        while(jumps<p-1)
-        {
-            prev=prev->next;
-            jumps++;
-        }
-        prev->next=temp->next;
-        delete temp;
-    }
     int length(ListNode* head)
     {
         int count=0;
@@ -64,23 +39,29 @@ public:
     }
     ListNode* removeNthFromEnd(ListNode* head, int n)
     {
-        int len=length(head);
-        int nod=len-n+1;
-        if(len==1)
+        if(length(head)==1)
         {
             return NULL;
         }
-        if(nod==1)
+        int k=n;
+        ListNode*fast=head;
+        ListNode*slow=head;
+        while(k--)
         {
-            deletion_at_head(head);
-            return head;
+            fast=fast->next;
         }
-        if(nod==len)
+        while(fast!=NULL)
+        {
+            fast=fast->next;
+            slow=slow->next;
+        }
+        if(slow->next==NULL)
         {
             deletion_at_tail(head);
             return head;
         }
-        deletion_at_middle(head,nod);
+        slow->val=slow->next->val;
+        slow->next=slow->next->next;
         return head;
     }
 };
