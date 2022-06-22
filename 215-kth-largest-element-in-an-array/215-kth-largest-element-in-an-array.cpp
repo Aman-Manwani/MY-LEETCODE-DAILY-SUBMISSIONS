@@ -5,7 +5,5 @@ public:
         int r=nums.size()-k;
         sort(nums.begin(),nums.end());
         return nums[r];
-        
-        
     }
 };
