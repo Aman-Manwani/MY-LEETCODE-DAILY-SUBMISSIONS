@@ -2,19 +2,27 @@ class Solution {
 public:
     int numberOfSubstrings(string s) 
     {
-        vector<int>v(3,0);
-        int i=0,j=0;
-        int count=0;
+        map<char,int>m;
+        int i=0;int j=0;int count=0;
         while(j<s.size())
         {
-            v[s[j]-'a']++;
-            while(v[0]>0 && v[1]>0 && v[2]>0 && i<=j)
+            m[s[j]]++;
+            if(m.size()==3)
             {
-                count+=s.size()-j;
-                v[s[i]-'a']--;
-                i++;
+                while(m.size()==3 && i<=j)
+                {
+                    count+=s.size()-j;
+                    m[s[i]]--;
+                    if(m[s[i]]==0)
+                    {
+                        m.erase(s[i]);
+                    }
+                    cout<<m.size();
+                    i++;
+                }
             }
             j++;
-        }return count;
+        }
+        return count;
     }
 };
