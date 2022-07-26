@@ -1,36 +1,35 @@
 class Solution {
 public:
-    int ans(vector<int>&nums,vector<int>&dp,int index)
+    int ans(vector<int>nums)
     {
-        //base case
-        if(index==0)
+        int n=nums.size();
+        int prev=nums[0];
+        int prev2=0;
+        int curr;
+        for(int i=1;i<n;i++)
         {
-            return nums[0];
+            int op1=nums[i];
+            if(i>1)
+            {
+                op1+=prev2;
+            }
+            int op2=0+prev;
+            curr=max(op1,op2);
+            prev2=prev;
+            prev=curr;
         }
-        if(index<0)
-        {
-            return 0;
-        }
-        if(dp[index]!=-1)
-        {
-            return dp[index];
-        }
-        //rec case
-        int pick=nums[index]+ans(nums,dp,index-2);
-        int not_pick=0+ans(nums,dp,index-1);
-        return dp[index]=max(pick,not_pick);
+        return prev;
     }
     int rob(vector<int>& nums)
     {
-        int n=nums.size();
-        if(n==1)
+        if(nums.size()==1)
         {
             return nums[0];
         }
-        vector<int>dp(n+1,-1);
+        int n=nums.size();
         vector<int>temp1;
         vector<int>temp2;
-        for(int i=0;i<n;i++)
+        for(int i=0;i<nums.size();i++)
         {
             if(i!=0)
             {
@@ -41,13 +40,8 @@ public:
                 temp2.push_back(nums[i]);
             }
         }
-        int ans1=ans(temp1,dp,temp1.size()-1);
-        for(int i=0;i<dp.size();i++)
-        {
-            dp[i]=-1;
-        }
-        int ans2=ans(temp2,dp,temp2.size()-1);
-        cout<<ans1<<" "<<ans2<<" ";
+        int ans1=ans(temp1);
+        int ans2=ans(temp2);
         return max(ans1,ans2);
     }
 };
