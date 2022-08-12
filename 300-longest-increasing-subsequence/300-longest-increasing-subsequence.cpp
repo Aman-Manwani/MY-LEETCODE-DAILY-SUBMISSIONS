@@ -1,7 +1,6 @@
 class Solution {
 public:
-    int maxi=0;
-    int ans(int index,vector<int>&nums,int prev,vector<vector<int>>&dp)
+    /*int ans(int index,vector<int>&nums,int prev,vector<vector<int>>&dp)
     {
         //base case
         if(index==nums.size())
@@ -16,10 +15,24 @@ public:
             len=max(len,1+ans(index+1,nums,index,dp));
         }
         return dp[index][prev+1] = len;
-    }
+    }*/
     int lengthOfLIS(vector<int>& nums) 
     {
-        vector<vector<int>>dp(nums.size()+1,vector<int>(nums.size()+1,-1));
-        return ans(0,nums,-1,dp);
+        vector<int>temp;
+        temp.push_back(nums[0]);
+        int len=1;
+        for(int i=1;i<nums.size();i++)
+        {
+            if(nums[i]>temp.back())
+            {
+                temp.push_back(nums[i]);
+                len++;
+            }else
+            {
+                int ind=lower_bound(temp.begin(),temp.end(),nums[i])-temp.begin();
+                temp[ind]=nums[i];
+            }        
+        }
+        return len;
     }
 };
