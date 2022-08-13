@@ -34,8 +34,8 @@ public:
             }        
         }
         return len;
-    }*/
-    int lengthOfLIS(vector<int>& nums) 
+    }
+    int ans3(vector<int>&nums)
     {
         int n=nums.size();
         vector<vector<int>>dp(n+1,vector<int>(n+1,0));
@@ -52,5 +52,22 @@ public:
             }
         }
         return dp[0][0];
+    }*/
+    int lengthOfLIS(vector<int>& nums) 
+    {
+        vector<int>dp(nums.size(),1);
+        int maxi=0;
+        for(int i=0;i<nums.size();i++)
+        {
+            for(int j=0;j<i;j++)
+            {
+                if(nums[j]<nums[i])
+                {
+                    dp[i]=max(dp[i],1+dp[j]);
+                }
+            }
+            maxi=max(maxi,dp[i]);
+        }
+        return maxi;
     }
 };
