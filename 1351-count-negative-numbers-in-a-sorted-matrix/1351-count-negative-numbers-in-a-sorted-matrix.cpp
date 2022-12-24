@@ -9,7 +9,8 @@ public:
             {
                 if(nums[i][j]<0)
                 {
-                    cnt++;
+                    cnt+=nums[i].size()-j;
+                    break;
                 }
             }
         }
