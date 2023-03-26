@@ -1,52 +1,70 @@
-class TrieNode{
-  public:
-    vector<TrieNode*> dict;
+class TrieNode {
+    public:
+    vector<TrieNode *>v;
     bool isEnd;
     TrieNode(){
         isEnd = false;
-        dict.resize(26, nullptr);
+        v.resize(26,NULL);
     }
 };
+
 class Trie {
 public:
-    TrieNode* root;
+    TrieNode * root;
     
-    /** Initialize your data structure here. */
     Trie() {
         root = new TrieNode();
     }
     
-    /** Inserts a word into the trie. */
-    void insert(string s) {
-        TrieNode* node = root;
-        for(int i=0;i<s.length();i++){
-            if(node->dict[s[i]-'a']==nullptr){
-                node->dict[s[i]-'a'] = new TrieNode();
+    void insert(string word) {
+        TrieNode * node = root;
+        for(int i=0;i<word.length();i++)
+        {
+            if(node -> v[word[i]-'a'] == NULL)
+            {
+                node -> v[word[i]-'a'] = new TrieNode();
             }
-            node = node->dict[s[i]-'a'];
+            node = node -> v[word[i]-'a'];
         }
-        node->isEnd = true;
+        node -> isEnd = true;
     }
     
-    /** Returns if the word is in the trie. */
-    bool search(string s) {
-        TrieNode* node = root;
-        for(int i=0;i<s.length();i++){
-            if(node->dict[s[i]-'a']==nullptr)
+    bool search(string word) {
+        TrieNode * node = root;
+        for(int i=0;i<word.length();i++)
+        {
+            if(node -> v[word[i]-'a'] == NULL)
+            {
                 return false;
-            node = node->dict[s[i]-'a'];
+            }else
+            {
+                node = node -> v[word[i]-'a'];
+            }
         }
-        return node->isEnd;
+        if(node -> isEnd == true)
+            return true;
+        return false;
     }
     
-    /** Returns if there is any word in the trie that starts with the given prefix. */
-    bool startsWith(string s) {
-        TrieNode* node = root;
-        for(int i=0;i<s.length();i++){
-            if(node->dict[s[i]-'a']==nullptr)
+    bool startsWith(string s) 
+    {
+        TrieNode * node = root;
+        for(int i=0;i<s.length();i++)
+        {
+            if(node -> v[s[i]-'a'] == NULL)
+            {
                 return false;
-            node = node->dict[s[i]-'a'];
+            }
+            node = node ->v[s[i]-'a'];
         }
         return true;
     }
 };
+
+/**
+ * Your Trie object will be instantiated and called as such:
+ * Trie* obj = new Trie();
+ * obj->insert(word);
+ * bool param_2 = obj->search(word);
+ * bool param_3 = obj->startsWith(prefix);
+ */
